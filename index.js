@@ -1,3 +1,4 @@
+var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
 
@@ -7,6 +8,7 @@ app.set('port', (process.env.PORT || 5000));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/public');
+app.get('/cool', (req, res) => res.send(cool()))
 
 app.get('/', function(request, response) {
   var env = process.env.APP_ENV;
