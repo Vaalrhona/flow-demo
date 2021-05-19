@@ -7,7 +7,7 @@ require('dotenv').config()
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:root@localhost:5432/salesforce.contact',
-  ssl: process.env.DATABASE_URL ? true : false
+  ssl: {rejectUnauthorized: process.env.DATABASE_URL ? true : false }
 });
 
 app.set('port', (process.env.PORT || 5000));
