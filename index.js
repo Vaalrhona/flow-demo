@@ -6,10 +6,8 @@ require('dotenv').config()
 
 const { Pool } = require('pg');
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:root@localhost:5432/salesforce.contact',
+  ssl: process.env.DATABASE_URL ? true : false
 });
 
 app.set('port', (process.env.PORT || 5000));
@@ -21,7 +19,7 @@ app.get('/times', (req, res) => res.send(showTimes()))
 app.get('/db', async(req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT ID FROM contact');
+    const result = await client.query('SELECT ID FROM salesforce.contact');
     const results = { 'results': (result) ? result.rows : null};
     res.render('pages/db', results);
     client.release();
