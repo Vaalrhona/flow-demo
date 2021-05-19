@@ -21,7 +21,7 @@ app.get('/times', (req, res) => res.send(showTimes()))
 app.get('/db', async(req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT ID FROM salesforce.contact');
+    const result = await client.query('SELECT ID FROM contact');
     const results = { 'results': (result) ? result.rows : null};
     res.render('pages/db', results);
     client.release();
